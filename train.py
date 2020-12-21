@@ -25,12 +25,24 @@ idx2char = np.array(vocab)
 
 text_as_int = np.array([char2idx[c] for c in text])
 
-
+# сохраняем список символов
+with open('web/model/map.js', 'w') as map_dump:
+    map_dump.write('var char2idx = { ')
+    for char,_ in zip(char2idx, range(len(vocab))):
+        map_dump.write('  {:4s}: {:3d},'.format(repr(char), char2idx[char]))
+    map_dump.write('};\n')
+    map_dump.write('var idx2char = { ')
+    for char,_ in zip(char2idx, range(len(vocab))):
+        map_dump.write('  {:3d}: {:4s},'.format(char2idx[char],repr(char) ) )
+    map_dump.write('};\n')
+    
 print('{')
 for char,_ in zip(char2idx, range(20)):
     print('  {:4s}: {:3d},'.format(repr(char), char2idx[char]))
 print('  ...\n}')
 
+
+exit()
 # Show how the first 13 characters from the text are mapped to integers
 print('{} ---- characters mapped to int ---- > {}'.format(repr(text[:13]), text_as_int[:13]))
 
@@ -144,7 +156,7 @@ checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     save_weights_only=True)
 
 
-EPOCHS = 10
+EPOCHS = 1
 
 # history = model.fit(dataset, epochs=EPOCHS, callbacks=[checkpoint_callback])
 
@@ -195,7 +207,7 @@ model.load_weights(tf.train.latest_checkpoint(checkpoint_dir))
 model.build(tf.TensorShape([1, None]))
 
 # Сохраним всю модель в  HDF5 файл
-model.save('my_model.h5')
+# model.save('my_model.h5')
 
 
 import tensorflowjs as tfjs
