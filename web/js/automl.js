@@ -75,18 +75,6 @@ function init_autocomplete(){
       lookup: 'name',
       fillAttr: 'value',
       requireLeadingSpace: false,
-      selectTemplate: function(item) {
-            if (typeof item === "undefined") return null;
-            if (this.range.isContentEditable(this.current.element)) {
-              return (
-                '<span contenteditable="false"><a>' +
-                item.original.key +
-                "</a></span>"
-              );
-            }
-
-            return item.original.value;
-          },
       menuItemTemplate: function(item) {
         return item.string;
       }

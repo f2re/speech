@@ -42,7 +42,7 @@ for char,_ in zip(char2idx, range(20)):
 print('  ...\n}')
 
 
-exit()
+# exit()
 # Show how the first 13 characters from the text are mapped to integers
 print('{} ---- characters mapped to int ---- > {}'.format(repr(text[:13]), text_as_int[:13]))
 
@@ -156,9 +156,9 @@ checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
     save_weights_only=True)
 
 
-EPOCHS = 1
+EPOCHS = 30
 
-# history = model.fit(dataset, epochs=EPOCHS, callbacks=[checkpoint_callback])
+history = model.fit(dataset, epochs=EPOCHS, callbacks=[checkpoint_callback])
 
 
 def generate_text(model, start_string):
@@ -207,11 +207,11 @@ model.load_weights(tf.train.latest_checkpoint(checkpoint_dir))
 model.build(tf.TensorShape([1, None]))
 
 # Сохраним всю модель в  HDF5 файл
-# model.save('my_model.h5')
+model.save('my_model_30.h5')
 
 
 import tensorflowjs as tfjs
-tfjs.converters.save_keras_model(model, "forecasts2")
+tfjs.converters.save_keras_model(model, "forecasts_30")
 
 
 print(model.summary())
