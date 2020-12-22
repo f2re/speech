@@ -66,7 +66,9 @@ function init_autocomplete(){
   var tribute = new Tribute({
 
       values: function( _, cb ) {
-          console.log(_);
+          if (_==''){
+            return [];
+          }
           get_ml_answers( _, answers => cb(answers) );
       },
       menuContainer: document.getElementById("autocomplete_wrapper"),
@@ -90,12 +92,11 @@ function init_autocomplete(){
  * получаем прогнозы из модели
  */
 function get_ml_answers(q, cb){
-  if ( q.length == 0 || q=='' ){
-    return [];
-  }
-  let txt = generate_text(window.ml_model,q, 20);
+  
+  let txt = generate_text(window.ml_model,q, 40);
+  txt = txt.split(' ')
+  txt.splice(-1,1);
+  txt = txt.join(' ');
   let _ = [ { 'name': txt, 'value':txt } ];
-  // let _ =  [{ name: "Bob Bill", value: "bobbill@example.com" },
-  //       { name: "Steve Stevenston", value: "steve@example.com" }]
   cb(_);
 }
